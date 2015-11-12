@@ -7,7 +7,10 @@ var should = require('should'),
     importer = require('../index');
 
 var filePath = function (file) {
-  return path.join(path.join(__dirname, 'sass'), file);
+  return path.join(__dirname, 'sass', file);
+};
+var bowerPath = function (file) {
+  return path.join(__dirname, '../bower_components', file);
 };
 
 describe('import-once', function () {
@@ -15,6 +18,7 @@ describe('import-once', function () {
     var file = filePath('basic-import-once.scss'),
         expectedIncludes = [
           file,
+          filePath('_partial-with-selectors.scss'),
           'partial-with-selectors'
         ];
 
@@ -38,7 +42,7 @@ describe('import-once', function () {
     var file = filePath('import-index.scss'),
         expectedIncludes = [
           file,
-          'foo'
+          filePath('foo/_index.scss')
         ];
 
     sass.render({
@@ -64,7 +68,7 @@ describe('import-once', function () {
     var file = filePath('import-css.scss'),
         expectedIncludes = [
           file,
-          'imported-css'
+          filePath('imported-css.css')
         ];
 
     sass.render({
@@ -91,24 +95,24 @@ describe('import-once', function () {
     var file = filePath('import-bower.scss'),
         expectedIncludes = [
           file,
-          'breakpoint',
-          'breakpoint/context',
-          'breakpoint/helpers',
-          'breakpoint/no-query',
-          'breakpoint/parsers',
-          'breakpoint/respond-to',
-          'double/default',
-          'double/default-pair',
-          'double/double-string',
-          'parsers/double',
-          'parsers/query',
-          'parsers/resolution',
-          'parsers/single',
-          'parsers/triple',
-          'resolution/resolution',
-          'single/default',
-          'toolkit/kickstart',
-          'triple/default'
+          bowerPath('breakpoint-sass/stylesheets/_breakpoint.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/_context.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/_helpers.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/_no-query.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/_parsers.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/_respond-to.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/_double.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/_query.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/_resolution.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/_single.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/_triple.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/double/_default-pair.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/double/_default.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/double/_double-string.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/resolution/_resolution.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/single/_default.scss'),
+          bowerPath('breakpoint-sass/stylesheets/breakpoint/parsers/triple/_default.scss'),
+          bowerPath('sass-toolkit/stylesheets/toolkit/_kickstart.scss')
         ];
 
     sass.render({
@@ -135,7 +139,7 @@ describe('import-once', function () {
     var file = filePath('import-json.scss'),
         expectedIncludes = [
           file,
-          'colors.json'
+          filePath('colors.json')
         ];
 
     sass.render({
@@ -160,7 +164,7 @@ describe('import-once', function () {
     var file = filePath('import-yaml.scss'),
         expectedIncludes = [
           file,
-          'colors.yaml'
+          filePath('colors.yaml')
         ];
 
     sass.render({
@@ -185,6 +189,7 @@ describe('import-once', function () {
     var file = filePath('import-custom.scss'),
         expectedIncludes = [
           file,
+          filePath('../custom/_custom-import.scss'),
           'custom-import'
         ];
 
@@ -192,7 +197,7 @@ describe('import-once', function () {
       'file': file,
       'importer': importer,
       'includePaths': [
-        'custom'
+        'test/custom'
       ]
     }, function (err, result) {
       if (err) {
@@ -213,7 +218,7 @@ describe('import-once', function () {
     var file = filePath('import-bootstrap.scss'),
         expectedIncludes = [
           file,
-          'bootstrap'
+          bowerPath('bootstrap/dist/css/bootstrap.css')
         ];
 
     sass.render({
@@ -240,6 +245,7 @@ describe('import-once', function () {
   it('should fall back to import paths and bower if data is passed in instead of a file name', function (done) {
     var file = filePath('basic-import-once.scss'),
         expectedIncludes = [
+          filePath('_partial-with-selectors.scss'),
           'partial-with-selectors'
         ];
 
