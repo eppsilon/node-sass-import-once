@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/at-import/node-sass-import-once",
   "devDependencies": {
-    "eslint": "^0.18.0",
+    "eslint": "^1.9.0",
     "mocha": "^2.2.1",
     "node-sass": "^3.0.0-beta.5",
     "should": "^5.2.0"
