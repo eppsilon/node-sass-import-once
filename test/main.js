@@ -267,4 +267,27 @@ describe('import-once', function() {
       done();
     });
   });
+
+  it('should import a file with dots in its name', function(done) {
+    var file = filePath('import-with-dot.scss'),
+        expectedIncludes = [
+          file,
+          filePath('file.with.dot.scss')
+        ];
+
+    sass.render({
+      'file': file,
+      'importer': importer
+    }, function(err, result) {
+      if (err) {
+        throw err;
+      }
+      should.exist(result);
+      result.stats.includedFiles.should.eql(expectedIncludes);
+      String(result.css).should.equal(
+        fs.readFileSync(path.join(__dirname, 'css/import-with-dot.css'), 'utf8')
+      );
+      done();
+    });
+  });
 });

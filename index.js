@@ -42,7 +42,7 @@ var importOnce = function importOnce(data, done) {
  * they leave off the partial prefix and the suffix.
  * This code creates the possible extensions, whether it is a partial
  * and whether it is a directory index file having those
- * same possible variations. If the import contains an extension,
+ * same possible variations. If the import contains a valid extension,
  * then it is left alone.
  *
 **/
@@ -51,7 +51,7 @@ var getFileNames = function getFileNames(abstractName) {
       directory,
       basename;
 
-  if (path.extname(abstractName)) {
+  if ([ '.scss', '.sass', '.css', '.json', '.yaml' ].indexOf(path.extname(abstractName)) !== -1) {
     names.push(abstractName);
   }
   else {
